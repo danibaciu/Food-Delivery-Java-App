@@ -11,6 +11,11 @@ public class Restaurant extends Entity<Long, Restaurant> {
     private Stock restaurantStock;
     private double commissionOfDelivery;
 
+    public Restaurant() {
+        super(serialRestaurantsNumber);
+        serialRestaurantsNumber += 1;
+    }
+
     public Restaurant(Address address, String name, Stock restaurantStock, double commissionOfDelivery) {
         super(serialRestaurantsNumber);
         serialRestaurantsNumber += 1;

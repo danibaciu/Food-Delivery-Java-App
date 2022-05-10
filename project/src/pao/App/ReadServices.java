@@ -2,6 +2,7 @@ package pao.App;
 
 import pao.Components.*;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -174,6 +175,86 @@ public class ReadServices {
         if (readServicesInstance == null)
             readServicesInstance = new ReadServices();
         return readServicesInstance;
+    }
+
+    public List<UserConsumer> readFromCsvUserConsumer(String filePath) {
+        List<UserConsumer> userConsumerList = new ArrayList<>();
+
+        try {
+            File file = new File(filePath);
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line = " ";
+            while ((line = br.readLine()) != null) {
+                UserConsumer aux = new UserConsumer();
+                aux.convertCsvStringToEntity(line);
+                userConsumerList.add(aux);
+            }
+            br.close();
+        } catch(IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return userConsumerList;
+    }
+
+    public List<UserEmployee> readFromCsvUserEmployee(String filePath) {
+        List<UserEmployee> userEmployeeList = new ArrayList<>();
+
+        try {
+            File file = new File(filePath);
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line = " ";
+            while ((line = br.readLine()) != null) {
+                UserEmployee aux = new UserEmployee();
+                aux.convertCsvStringToEntity(line);
+                userEmployeeList.add(aux);
+            }
+            br.close();
+        } catch(IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return userEmployeeList;
+    }
+
+    public List<Product> readFromCsvProduct(String filePath) {
+        List<Product> productList = new ArrayList<>();
+
+        try {
+            File file = new File(filePath);
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line = " ";
+            while ((line = br.readLine()) != null) {
+                Product aux = new Product();
+                aux.convertCsvStringToEntity(line);
+                productList.add(aux);
+            }
+            br.close();
+        } catch(IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return productList;
+    }
+
+    public List<Restaurant> readFromCsvRestaurant(String filePath) {
+        List<Restaurant> restaurantList = new ArrayList<>();
+
+        try {
+            File file = new File(filePath);
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line = " ";
+            while ((line = br.readLine()) != null) {
+                Restaurant aux = new Restaurant();
+                aux.convertCsvStringToEntity(line);
+                restaurantList.add(aux);
+            }
+            br.close();
+        } catch(IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return restaurantList;
     }
 
 }

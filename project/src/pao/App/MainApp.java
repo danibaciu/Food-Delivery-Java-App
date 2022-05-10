@@ -3,10 +3,23 @@ package pao.App;
 import java.util.Scanner;
 
 public class MainApp {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+
         Services services = Services.getInstance();
 
-        Scanner in = new Scanner(System.in);
+        System.out.println("Inainte de a porni meniul interactiv, vrei sa incarci datele din memorie ? (YES/NO) ");
+        String options = in.nextLine();
+        if (options.equals("YES")) {
+            services.uploadFromMemory();
+            System.out.println("S-a terminat incarcarea din memorie si acum poti continua activitatea pe aplicatie !");
+        } else {
+            if (!options.equals("NO")) {
+                System.out.println("Optiune invalida ! O sa continuam fara sa incarcam datele din memorie ! Multumim !");
+            }
+        }
+
+
         int option;
         boolean exit = false;
 

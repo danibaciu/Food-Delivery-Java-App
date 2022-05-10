@@ -11,6 +11,11 @@ public abstract class AbstractUser extends Entity<Long, Object>{
     protected LocalDate dateOfBirth;
     protected Address addressOfLiving;
 
+    public AbstractUser(){
+        super(serialOfUserNumber);
+        serialOfUserNumber += 1;
+    }
+
     public AbstractUser(String firstName, String lastName, String emailAddress, LocalDate timestampOfBirth, Address addressOfLiving) {
         super(serialOfUserNumber);
         serialOfUserNumber += 1;

@@ -10,6 +10,8 @@ public class UserEmployee extends AbstractUser {
     private LocalDate dateOfHire;
     private PossibleJobs jobName;
 
+    public UserEmployee(){}
+
     public UserEmployee(String firstName, String lastName, String emailAddress, LocalDate timeOfBirth, Address addressOfLiving, long salaryPerMonth, PossibleJobs job) {
         super(firstName, lastName, emailAddress, timeOfBirth, addressOfLiving);
 

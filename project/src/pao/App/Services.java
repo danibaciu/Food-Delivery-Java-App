@@ -24,6 +24,13 @@ public class Services {
         return servicesInstance;
     }
 
+    public void uploadFromMemory() {
+        this.appUser = readServices.readFromCsvUserConsumer("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Consumers.csv");
+        this.appDrivers = readServices.readFromCsvUserEmployee("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Drivers.csv");
+        this.appRestaurants = readServices.readFromCsvRestaurant("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Restaurants.csv");
+        this.restaurantProducts = readServices.readFromCsvProduct("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Products.csv");
+    }
+
     public final void showMenu() {
         System.out.println("# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #");
         System.out.println("# # # # #   Welcome to out delivery platform console App   # # # # #");
@@ -113,7 +120,7 @@ public class Services {
         }
     }
 
-    public void orderFood() throws InterruptedException {
+    public void orderFood(){
         Scanner in = new Scanner(System.in);
 
         System.out.println("Which id have the user that ordered the food ? Enter the user id : ");
@@ -142,7 +149,11 @@ public class Services {
         Integer driverIndex;
 
         while ((driverIndex = getDriverIndex()) != -1) {
-            wait(10); // we will wait until a driver is available
+            try {
+                wait(10); // we will wait until a driver is available
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
         System.out.println("Comanda a fost preluata si va fi livrata in " + order.getProductsOrdered().size() + " minutes and the name of the driver is " + appDrivers.get(driverIndex).getFullName());

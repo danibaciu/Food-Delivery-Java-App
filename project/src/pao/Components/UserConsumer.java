@@ -13,6 +13,8 @@ public class UserConsumer extends AbstractUser {
     private LocalDate dateOfSignUp;
     private List<Order> lastOrders;
 
+    public UserConsumer(){}
+
     public UserConsumer(String firstName, String lastName, String emailAddress, LocalDate timeOfBirth, Address addressOfLiving) {
         super(firstName, lastName, emailAddress, timeOfBirth, addressOfLiving);
         dateOfSignUp = LocalDate.now();
