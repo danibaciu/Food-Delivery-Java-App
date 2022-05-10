@@ -1,6 +1,6 @@
 package pao.Components;
 
-public class Entity<T> {
+public abstract class Entity<T, A> extends IOStream<A> {
     protected T id;
 
     public Entity(T id) {

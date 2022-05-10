@@ -1,23 +1,24 @@
 package pao.Components;
 
-import pao.Components.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class Order {
+public class Order extends IOStream<Order>{
+
     private Address addressOfDelivery;
-    private Map<Entity<Long>, Integer> productsOrdered;
-    private Entity<Long> restaurantId, driverID;
+    private Map<Long, Integer> productsOrdered;
+    private Entity<Long, Integer> restaurantId, driverID;
     private LocalDateTime timeOfOrder;
 
-    public Order(Address addressOfDelivery, Map<Entity<Long>, Integer> productsOrdered, long restaurantId) {
+    public Order(){}
+
+    public Order(Address addressOfDelivery, Map<Long, Integer> productsOrdered, long restaurantId) {
         this.addressOfDelivery = addressOfDelivery;
         this.productsOrdered = productsOrdered;
-        this.restaurantId = new Entity<Long>(restaurantId);
+        this.restaurantId.id = restaurantId;
         this.timeOfOrder = LocalDateTime.now();
-        this.driverID = new Entity<Long>(-1L);
+        this.driverID.id = -1L;
     }
 
     public Address getAddressOfDelivery() {
@@ -28,7 +29,7 @@ public class Order {
         return restaurantId.getId();
     }
 
-    public Map<Entity<Long>, Integer> getProductsOrdered() {
+    public Map<Long, Integer> getProductsOrdered() {
         return this.productsOrdered;
     }
 
@@ -47,7 +48,7 @@ public class Order {
     public double calculateTotalFee(List<Product> restaurantProducts) {
         double sum = 0.0;
         for (var id : productsOrdered.keySet()) {
-            sum += restaurantProducts.get(Math.toIntExact(id.getId())).getPrice() * productsOrdered.get(id) ; // sum(price * quantity)
+            sum += restaurantProducts.get(Math.toIntExact(id)).getPrice() * productsOrdered.get(id) ; // sum(price * quantity)
         }
         return sum;
     }
@@ -57,7 +58,7 @@ public class Order {
 
         StringBuilder mapAsString = new StringBuilder("{");
 
-        for (Entity<Long> key : productsOrdered.keySet()) {
+        for (var key : productsOrdered.keySet()) {
             mapAsString.append(key + "=" + productsOrdered.get(key) + ", ");
         }
         mapAsString.delete(mapAsString.length()-2, mapAsString.length()).append("}");
@@ -68,5 +69,37 @@ public class Order {
                 ", restaurantId=" + restaurantId.id +
                 ", timeOfOrder=" + timeOfOrder.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +
         '}';
+    }
+
+    @Override
+    public String convertEntityToCsvString() {
+        StringBuilder mapAsString = new StringBuilder("");
+
+        for (var key : productsOrdered.keySet()) {
+            mapAsString.append(",(").append(key).append("*").append(productsOrdered.get(key)).append(")");
+        }
+        return "Order," + timeOfOrder + "," + restaurantId.id + "," + driverID.id + "," + addressOfDelivery.convertEntityToCsvString() + mapAsString;
+    }
+
+    @Override
+    public void convertCsvStringToEntity(String CsvString) {
+
+        String []tempArr = CsvString.split(CsvDelimiter);
+
+        try {
+            this.timeOfOrder = LocalDateTime.parse(tempArr[0]);
+            this.restaurantId.id = Long.valueOf(tempArr[1]);
+            this.driverID.id = Long.valueOf(tempArr[2]);
+
+            (this.addressOfDelivery = new Address()).convertCsvStringToEntity(tempArr[3] + "," + tempArr[4] + "," + tempArr[5] + "," + tempArr[6]);
+
+            for (int i = 7; i < tempArr.length; i++) {
+                String []prod = tempArr[i].split("/(/)/*");
+                this.productsOrdered.put(Long.valueOf(prod[0]), Integer.valueOf(prod[1]));
+            }
+        }
+        catch (Exception exception) {
+            System.out.println("Exceptie la citirea comenzilor din CSV : " + exception);
+        }
     }
 }

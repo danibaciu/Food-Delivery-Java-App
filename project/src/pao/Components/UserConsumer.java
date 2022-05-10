@@ -60,4 +60,14 @@ public class UserConsumer extends AbstractUser {
                 ", dateOfSignUp=" + dateOfSignUp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) +
                 '}';
     }
+
+    @Override
+    public String convertEntityToCsvString() {
+        return AbstractUser::convertEntityToCsvString() + ",";
+    }
+
+    @Override
+    public void convertCsvStringToEntity(String CsvString) {
+
+    }
 }

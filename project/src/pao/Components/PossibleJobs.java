@@ -2,9 +2,9 @@ package pao.Components;
 
 public enum PossibleJobs{
         CEO,
-        Manager,
-        Secretary,
-        Deputy_Manager,
-        Driver,
-        Call_Center_Operator
+        MANAGER,
+        SECRETARY,
+        DEPUTY_MANAGER,
+        DRIVER,
+        CALL_CENTER_OPERATOR
 }

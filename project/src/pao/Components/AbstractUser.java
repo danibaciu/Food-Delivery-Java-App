@@ -3,7 +3,7 @@ package pao.Components;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public abstract class AbstractUser extends Entity<Long> {
+public abstract class AbstractUser extends Entity<Long, Object>{
 
     static long serialOfUserNumber = 0;
 
@@ -60,5 +60,25 @@ public abstract class AbstractUser extends Entity<Long> {
                 ", dateOfBirth=" + dateOfBirth.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) +
                 ", addressOfLiving=" + addressOfLiving +
                 ", id=" + getId();
+    }
+
+    public String convertEntityToCsvString(){
+        return id + "," + firstName + "," + lastName + "," + emailAddress + "," + dateOfBirth.toString() + "," + addressOfLiving.convertEntityToCsvString();
+    }
+
+    public void convertCsvStringToEntity(String CsvString){
+        String []tempArr = CsvString.split(CsvDelimiter);
+
+        try {
+            this.id = Long.valueOf(tempArr[0]);
+            this.firstName = tempArr[1];
+            this.lastName = tempArr[2];
+            this.emailAddress = tempArr[3];
+            this.dateOfBirth = LocalDate.parse(tempArr[4]);
+            (this.addressOfLiving = new Address()).convertCsvStringToEntity(tempArr[5] + "," + tempArr[6] + "," + tempArr[7] + "," + tempArr[8]);
+        }
+        catch (Exception exception) {
+            System.out.println("Exceptie la citirea userului abstract din CSV : " + exception);
+        }
     }
 }

@@ -1,8 +1,9 @@
 package pao.Components;
 
+import java.util.Arrays;
 import java.util.Map;
 
-public class Restaurant extends Entity<Long> {
+public class Restaurant extends Entity<Long, Restaurant> {
     static long serialRestaurantsNumber = 0;
 
     private Address address;
@@ -44,7 +45,7 @@ public class Restaurant extends Entity<Long> {
         this.commissionOfDelivery = commissionOfDelivery;
     }
 
-    public void updateStock(Map<Entity<Long>, Integer> productsOrdered) {
+    public void updateStock(Map<Long, Integer> productsOrdered) {
         restaurantStock.updateStock(productsOrdered);
     }
 
@@ -65,5 +66,31 @@ public class Restaurant extends Entity<Long> {
                 ", commissionOfDelivery=" + commissionOfDelivery +
                 Stock.class.toString() +
                 '}';
+    }
+
+    @Override
+    public String convertEntityToCsvString() {
+        return name + "," + commissionOfDelivery + "," + address.convertEntityToCsvString() + "," + restaurantStock.convertEntityToCsvString();
+    }
+
+    @Override
+    public void convertCsvStringToEntity(String CsvString) {
+        String []tempArr = CsvString.split(CsvDelimiter);
+        StringBuilder stockString = null;
+
+        try {
+            this.name = tempArr[0];
+            this.commissionOfDelivery = Double.parseDouble(tempArr[1]);
+            (this.address = new Address()).convertCsvStringToEntity(tempArr[2] + "," + tempArr[3] + "," + tempArr[4] + "," + tempArr[5]);
+
+            for (int i = 6; i < tempArr.length; i++) {
+                stockString.append(",").append(tempArr[i]);
+            }
+
+            (this.restaurantStock = new Stock()).convertCsvStringToEntity(stockString.toString());
+        }
+        catch (Exception exception) {
+            System.out.println("Exceptie la citirea restaurantelor din CSV : " + exception);
+        }
     }
 }

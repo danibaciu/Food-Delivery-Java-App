@@ -5,6 +5,13 @@ import pao.Components.*;
 import java.time.LocalDate;
 import java.util.*;
 
+
+
+// MODIFY BELOW
+
+
+
+
 public class ReadServices {
 
     private static ReadServices readServicesInstance = null;
@@ -99,9 +106,9 @@ public class ReadServices {
     protected Stock readStock() {
         Scanner in = new Scanner(System.in);
 
-        Map<Entity<Long>, Integer> products = new HashMap<Entity<Long>, Integer>();
+        Map<Long, Integer> products = new HashMap<Long, Integer>();
         Integer noOfProducts, productNo;
-        Entity<Long> x;
+        Entity<Long, Integer> x;
 
         System.out.println("Enter the number of the product ingredients :");
         noOfProducts = in.nextInt();
@@ -109,11 +116,11 @@ public class ReadServices {
 
         for (int i = 0; i < noOfProducts; i++) {
             System.out.println("Enter the index of " + i + " product :");
-            x = new Entity<Long>(in.nextLong());
-            System.out.println("Enter the quantity of this product :");
-            productNo = in.nextInt();
-
-            products.put(x, productNo);
+//            x = new Entity<Long, Integer>(in.nextLong());
+//            System.out.println("Enter the quantity of this product :");
+//            productNo = in.nextInt();
+//
+//            products.put(x, productNo);
         }
 
         return new Stock(products);
@@ -146,7 +153,7 @@ public class ReadServices {
     protected Order readOrder() {
         Scanner in = new Scanner(System.in);
 
-        Map<Entity<Long>, Integer> productsOrdered = new HashMap<Entity<Long>, Integer>();
+        Map<Long, Integer> productsOrdered = new HashMap<Long, Integer>();
         Long restaurantId, x;
         Integer noOfProducts, productNo;
 
@@ -165,7 +172,12 @@ public class ReadServices {
             System.out.println("Enter the quantity of this product :");
             productNo = in.nextInt();
 
-            productsOrdered.put(new Entity<Long>(x), productNo);
+            // MODIFY HERE
+
+
+
+
+//            productsOrdered.put(new Entity<Long>(x), productNo);
         }
         return new Order(addressOfDelivery, productsOrdered, restaurantId);
     }

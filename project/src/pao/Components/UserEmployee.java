@@ -40,4 +40,14 @@ public class UserEmployee extends AbstractUser {
                 ", jobName='" + jobName.toString() + '\'' +
                 '}';
     }
+
+    @Override
+    public String convertEntityToCsvString() {
+        return null;
+    }
+
+    @Override
+    public void convertCsvStringToEntity(String CsvString) {
+
+    }
 }

@@ -1,14 +1,21 @@
 package pao.Components;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Product extends Entity<Long>{
+public class Product extends Entity<Long, Product>{
     static long serialProductsNumber = 0;
 
     private String nameOfProduct, unityOfMeasurement;
     private List<String> ingredients;
     private double price, quantity;
+
+    public Product(){
+        super(serialProductsNumber);
+        serialProductsNumber += 1;
+    }
 
     public Product(String nameOfProduct, String unityOfMeasurement, List<String> ingredients, double price, double quantity) {
         super(serialProductsNumber);
@@ -70,5 +77,30 @@ public class Product extends Entity<Long>{
                 ", price=" + price +
                 ", quantity=" + quantity +
                 '}';
+    }
+
+    @Override
+    public String convertEntityToCsvString() {
+        StringBuilder ingred = new StringBuilder();
+        for (var ingredient : ingredients) {
+            ingred.append(",").append(ingredient);
+        }
+        return nameOfProduct + "," + unityOfMeasurement + "," + price + "," + quantity + ingred;
+    }
+
+    @Override
+    public void convertCsvStringToEntity(String CsvString) {
+        String []tempArr = CsvString.split(CsvDelimiter);
+
+        try {
+            this.nameOfProduct = tempArr[0];
+            this.unityOfMeasurement = tempArr[1];
+            this.price = Double.parseDouble(tempArr[2]);
+            this.quantity = Double.parseDouble(tempArr[3]);
+            this.ingredients.addAll(Arrays.asList(tempArr).subList(4, tempArr.length));
+        }
+        catch (Exception exception) {
+            System.out.println("Exceptie la citirea produselor din CSV : " + exception);
+        }
     }
 }

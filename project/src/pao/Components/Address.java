@@ -1,6 +1,9 @@
 package pao.Components;
 
-public class Address {
+import java.io.*;
+
+
+public class Address extends IOStream<Address> {
 
     private String country, city, street;
 
@@ -11,6 +14,9 @@ public class Address {
         this.city = city;
         this.street = street;
         this.streetNumber = streetNumber;
+    }
+
+    public Address() {
     }
 
     public String getCountry() {
@@ -53,5 +59,24 @@ public class Address {
                 ", street='" + street + '\'' +
                 ", streetNumber=" + streetNumber +
                 '}';
+    }
+
+    @Override
+    public String convertEntityToCsvString() {
+        return country + "," + city + "," + street + "," + streetNumber;
+    }
+
+    @Override
+    public void convertCsvStringToEntity(String CsvString) {
+        String []tempArr = CsvString.split(CsvDelimiter);
+        try {
+            this.country = tempArr[0];
+            this.city = tempArr[1];
+            this.street = tempArr[2];
+            this.streetNumber = Integer.valueOf(tempArr[3]);
+        }
+        catch (Exception exception) {
+            System.out.println("Exceptie la citirea adreselor din CSV : " + exception.toString());
+        }
     }
 }
