@@ -8,8 +8,7 @@ public class UserEmployee extends AbstractUser {
 
     private long salaryPerMonth;
     private LocalDate dateOfHire;
-    private final PossibleJobs jobName;
-//    private double x, y; // coordinates of his position on the map
+    private PossibleJobs jobName;
 
     public UserEmployee(String firstName, String lastName, String emailAddress, LocalDate timeOfBirth, Address addressOfLiving, long salaryPerMonth, PossibleJobs job) {
         super(firstName, lastName, emailAddress, timeOfBirth, addressOfLiving);
@@ -43,11 +42,25 @@ public class UserEmployee extends AbstractUser {
 
     @Override
     public String convertEntityToCsvString() {
-        return null;
+        return super.convertEntityToCsvString() + "," + salaryPerMonth + "," + dateOfHire.toString() + "," + jobName.toString();
     }
 
     @Override
     public void convertCsvStringToEntity(String CsvString) {
+        String []tempArr = CsvString.split(CsvDelimiter);
 
+        try {
+            StringBuilder abstractConstructor = new StringBuilder(tempArr[0]);
+            for (int i = 1; i <= 8; i++) {
+                abstractConstructor.append(",").append(tempArr[i]);
+            }
+            super.convertCsvStringToEntity(abstractConstructor.toString());
+            this.salaryPerMonth = Long.parseLong(tempArr[9]);
+            this.dateOfHire = LocalDate.parse(tempArr[10]);
+            this.jobName = PossibleJobs.valueOf(tempArr[11]);
+        }
+        catch (Exception exception) {
+            System.out.println("Exceptie la citirea soferului din CSV : " + exception);
+        }
     }
 }

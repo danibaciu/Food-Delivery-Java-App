@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class UserConsumer extends AbstractUser {
 
-    private final LocalDate dateOfSignUp;
+    private LocalDate dateOfSignUp;
     private List<Order> lastOrders;
 
     public UserConsumer(String firstName, String lastName, String emailAddress, LocalDate timeOfBirth, Address addressOfLiving) {
@@ -63,11 +63,27 @@ public class UserConsumer extends AbstractUser {
 
     @Override
     public String convertEntityToCsvString() {
-        return AbstractUser::convertEntityToCsvString() + ",";
+        StringBuilder orders = new StringBuilder();
+        for (var k : lastOrders) {
+            orders.append(",").append(k.convertEntityToCsvString());
+        }
+        return super.convertEntityToCsvString() + "," + dateOfSignUp.toString() + "," + orders;
     }
 
     @Override
     public void convertCsvStringToEntity(String CsvString) {
+        String []tempArr = CsvString.split(CsvDelimiter);
 
+        try {
+            StringBuilder abstractConstructor = new StringBuilder(tempArr[0]);
+            for (int i = 1; i <= 8; i++) {
+                abstractConstructor.append(",").append(tempArr[i]);
+            }
+            super.convertCsvStringToEntity(abstractConstructor.toString());
+            this.dateOfSignUp = LocalDate.parse(tempArr[9]);
+        }
+        catch (Exception exception) {
+            System.out.println("Exceptie la citirea utilizatorului din CSV : " + exception);
+        }
     }
 }

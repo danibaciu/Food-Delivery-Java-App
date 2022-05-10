@@ -5,13 +5,6 @@ import pao.Components.*;
 import java.time.LocalDate;
 import java.util.*;
 
-
-
-// MODIFY BELOW
-
-
-
-
 public class ReadServices {
 
     private static ReadServices readServicesInstance = null;
@@ -108,7 +101,7 @@ public class ReadServices {
 
         Map<Long, Integer> products = new HashMap<Long, Integer>();
         Integer noOfProducts, productNo;
-        Entity<Long, Integer> x;
+        Long x;
 
         System.out.println("Enter the number of the product ingredients :");
         noOfProducts = in.nextInt();
@@ -116,11 +109,11 @@ public class ReadServices {
 
         for (int i = 0; i < noOfProducts; i++) {
             System.out.println("Enter the index of " + i + " product :");
-//            x = new Entity<Long, Integer>(in.nextLong());
-//            System.out.println("Enter the quantity of this product :");
-//            productNo = in.nextInt();
-//
-//            products.put(x, productNo);
+            x = in.nextLong();
+            System.out.println("Enter the quantity of this product :");
+            productNo = in.nextInt();
+
+            products.put(x, productNo);
         }
 
         return new Stock(products);
@@ -172,12 +165,7 @@ public class ReadServices {
             System.out.println("Enter the quantity of this product :");
             productNo = in.nextInt();
 
-            // MODIFY HERE
-
-
-
-
-//            productsOrdered.put(new Entity<Long>(x), productNo);
+            productsOrdered.put(x, productNo);
         }
         return new Order(addressOfDelivery, productsOrdered, restaurantId);
     }
