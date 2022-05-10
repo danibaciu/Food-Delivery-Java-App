@@ -60,7 +60,7 @@ public class Order extends IOStream<Order> {
         StringBuilder mapAsString = new StringBuilder("{");
 
         for (var key : productsOrdered.keySet()) {
-            mapAsString.append(key + "=" + productsOrdered.get(key) + ", ");
+            mapAsString.append(key).append("=").append(productsOrdered.get(key)).append(", ");
         }
         mapAsString.delete(mapAsString.length() - 2, mapAsString.length()).append("}");
 
