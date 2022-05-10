@@ -43,12 +43,6 @@ public class UserConsumer extends AbstractUser {
         return counter;
     }
 
-    public double returnSumLastOrder(List<Product> restaurantProducts) {
-        if (lastOrders.size() >= 1)
-            return lastOrders.get(lastOrders.size() - 1).calculateTotalFee(restaurantProducts);
-        return 0.0;
-    }
-
     public LocalDateTime returnTimeOfLastOrder() {
         if (lastOrders.size() >= 1)
             return lastOrders.get(lastOrders.size() - 1).getDateTime();

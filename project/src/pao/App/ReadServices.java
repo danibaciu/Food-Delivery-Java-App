@@ -71,7 +71,7 @@ public class ReadServices {
         Scanner in = new Scanner(System.in);
 
         String nameOfProduct, unityOfMeasurement;
-        List<String> ingredients = new ArrayList<String>();
+        List<String> ingredients = new ArrayList<>();
         Integer noOfIngredients;
         double price, quantity;
 
@@ -100,7 +100,7 @@ public class ReadServices {
     protected Stock readStock() {
         Scanner in = new Scanner(System.in);
 
-        Map<Long, Integer> products = new HashMap<Long, Integer>();
+        Map<Long, Integer> products = new HashMap<>();
         Integer noOfProducts, productNo;
         Long x;
 
@@ -147,7 +147,7 @@ public class ReadServices {
     protected Order readOrder() {
         Scanner in = new Scanner(System.in);
 
-        Map<Long, Integer> productsOrdered = new HashMap<Long, Integer>();
+        Map<Long, Integer> productsOrdered = new HashMap<>();
         Long restaurantId, x;
         Integer noOfProducts, productNo;
 

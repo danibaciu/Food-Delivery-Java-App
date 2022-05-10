@@ -1,7 +1,6 @@
 package pao.Components;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class UserEmployee extends AbstractUser {
@@ -26,6 +25,7 @@ public class UserEmployee extends AbstractUser {
 
     public void increaseSalaryByXPercent(Integer x) {
         this.salaryPerMonth += (long)(salaryPerMonth * x) / 100;
+        System.out.println("Driver " + this.getFullName() + " now have the salary of " + this.getSalaryPerMonth() + ".");
     }
 
     public String getJobName() {

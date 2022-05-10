@@ -46,13 +46,7 @@ public class Order extends IOStream<Order> {
         return driverID.getId();
     }
 
-    public double calculateTotalFee(List<Product> restaurantProducts) {
-        double sum = 0.0;
-        for (var id : productsOrdered.keySet()) {
-            sum += restaurantProducts.get(Math.toIntExact(id)).getPrice() * productsOrdered.get(id); // sum(price * quantity)
-        }
-        return sum;
-    }
+
 
     @Override
     public String toString() {

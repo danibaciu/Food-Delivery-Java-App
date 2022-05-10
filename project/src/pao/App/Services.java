@@ -54,6 +54,17 @@ public class Services {
         System.out.println(" - Introduce the option number that you choose : ");
     }
 
+    public final void showLogo() {
+        System.out.println("  _____           _   _                                                                       \n" +
+                " |  __ \\         | | (_)                                                /\\                    \n" +
+                " | |  | |   ___  | |  _  __   __   ___   _ __   _   _     ______       /  \\     _ __    _ __  \n" +
+                " | |  | |  / _ \\ | | | | \\ \\ / /  / _ \\ | '__| | | | |   |______|     / /\\ \\   | '_ \\  | '_ \\ \n" +
+                " | |__| | |  __/ | | | |  \\ V /  |  __/ | |    | |_| |               / ____ \\  | |_) | | |_) |\n" +
+                " |_____/   \\___| |_| |_|   \\_/    \\___| |_|     \\__, |              /_/    \\_\\ | .__/  | .__/ \n" +
+                "                                                 __/ |                         | |     | |    \n" +
+                "                                                |___/                          |_|     |_|   ");
+    }
+
     public void addClient() {
         UserConsumer client = readServices.readClient();
         appUser.add(client);
@@ -217,7 +228,16 @@ public class Services {
 
     public void printSumLastOrderForEachUser() {
         for (var user : appUser) {
-            System.out.println("User " + user.getFullName() + " was ordered in value of " + user.returnSumLastOrder(restaurantProducts) + " in the date of " + user.returnTimeOfLastOrder());
+            System.out.println("User " + user.getFullName() + " was ordered in value of " + calculateTotalFee(user.getLastOrder()) + " in the date of " + user.returnTimeOfLastOrder());
         }
+    }
+
+    public double calculateTotalFee(Order order) {
+        double sum = 0.0;
+        var productsOrdered = order.getProductsOrdered();
+        for (var id : productsOrdered.keySet()) {
+            sum += restaurantProducts.get(Math.toIntExact(id)).getPrice() * productsOrdered.get(id); // sum(price * quantity)
+        }
+        return sum;
     }
 }

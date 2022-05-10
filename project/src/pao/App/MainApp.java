@@ -8,6 +8,9 @@ public class MainApp {
 
         Services services = Services.getInstance();
 
+        services.showLogo();
+        System.out.println("\n\n\n");
+
         System.out.println("Inainte de a porni meniul interactiv, vrei sa incarci datele din memorie ? (YES/NO) ");
         String options = in.nextLine();
         if (options.equals("YES")) {
