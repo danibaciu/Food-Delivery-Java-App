@@ -257,4 +257,24 @@ public class ReadServices {
         return restaurantList;
     }
 
+    public List<Order> readFromCsvOrder(String filePath) {
+        List<Order> orderList = new ArrayList<>();
+
+        try {
+            File file = new File(filePath);
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line = " ";
+            while ((line = br.readLine()) != null) {
+                Order aux = new Order();
+                aux.convertCsvStringToEntity(line);
+                orderList.add(aux);
+            }
+            br.close();
+        } catch(IOException ioe) {
+            ioe.printStackTrace();
+        }
+        return orderList;
+    }
+
 }

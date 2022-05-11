@@ -17,6 +17,7 @@ public class Services {
     private List<LocalDateTime> driversAvailability = new ArrayList<>();
     private List<Restaurant> appRestaurants = new ArrayList<>();
     private List<Product> restaurantProducts = new ArrayList<>();
+    private List<Order> appOrders = new ArrayList<>();
 
     public static Services getInstance() {
         if (servicesInstance == null)
@@ -25,8 +26,9 @@ public class Services {
     }
 
     public void uploadFromMemory() {
-        this.appUser = readServices.readFromCsvUserConsumer("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Consumers.csv");
         this.appDrivers = readServices.readFromCsvUserEmployee("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Drivers.csv");
+        this.appUser = readServices.readFromCsvUserConsumer("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Users.csv");
+        this.appOrders = readServices.readFromCsvOrder("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Orders.csv");
         this.appRestaurants = readServices.readFromCsvRestaurant("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Restaurants.csv");
         this.restaurantProducts = readServices.readFromCsvProduct("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Products.csv");
     }
@@ -140,9 +142,11 @@ public class Services {
         System.out.println("Enter the order info :");
         Order order = readServices.readOrder();
 
+        appOrders.add(order);
+
         for (UserConsumer user : appUser) {
             if (user.getId().equals(userId)) {
-                user.addOrder(order);
+                user.addOrder(appOrders.size() - 1);
                 break;
             }
         }
@@ -174,7 +178,7 @@ public class Services {
 
     public void printUserThatOrderedToday() {
         for (UserConsumer user : appUser) {
-            if (user.getLastOrder().getDateTime().toLocalDate().isEqual(LocalDate.now())) {
+            if (user.getLastOrder(appOrders).getDateTime().toLocalDate().isEqual(LocalDate.now())) {
                 System.out.println(user.toString());
             }
         }
@@ -217,7 +221,7 @@ public class Services {
     private Long getNoOfOrders(UserEmployee driver) {
         Long counter = 0L;
         for (UserConsumer user : appUser) {
-            counter += user.getNoOfOrdersForADriver(driver);
+            counter += user.getNoOfOrdersForADriver(driver, appOrders);
         }
         return counter;
     }
@@ -228,7 +232,7 @@ public class Services {
 
     public void printSumLastOrderForEachUser() {
         for (var user : appUser) {
-            System.out.println("User " + user.getFullName() + " was ordered in value of " + calculateTotalFee(user.getLastOrder()) + " in the date of " + user.returnTimeOfLastOrder());
+            System.out.println("User " + user.getFullName() + " was ordered in value of " + calculateTotalFee(user.getLastOrder(appOrders)) + " in the date of " + user.returnTimeOfLastOrder(appOrders));
         }
     }
 

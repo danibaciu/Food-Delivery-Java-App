@@ -11,7 +11,7 @@ import java.util.Objects;
 public class UserConsumer extends AbstractUser {
 
     private LocalDate dateOfSignUp;
-    private List<Order> lastOrders;
+    private List<Integer> lastOrders;
 
     public UserConsumer(){}
 
@@ -21,31 +21,31 @@ public class UserConsumer extends AbstractUser {
         lastOrders = new ArrayList<>();
     }
 
-    public void addOrder(Order order) {
+    public void addOrder(Integer order) {
         lastOrders.add(order);
     }
 
-    public Order getLastOrder() {
-        return this.lastOrders.get(lastOrders.size() - 1);
+    public Order getLastOrder(List<Order> orders) {
+        return orders.get(this.lastOrders.get(lastOrders.size() - 1));
     }
 
     public Integer getNumOfOrders() {
         return this.lastOrders.size();
     }
 
-    public Long getNoOfOrdersForADriver(UserEmployee driver) {
+    public Long getNoOfOrdersForADriver(UserEmployee driver, List<Order> orders) {
         Long counter = 0L;
-        for (Order order : lastOrders) {
-            if (Objects.equals(driver.getId(), order.getDriverID())) {
+        for (var order : lastOrders) {
+            if (Objects.equals(driver.getId(), orders.get(order).getDriverID())) {
                 counter += 1;
             }
         }
         return counter;
     }
 
-    public LocalDateTime returnTimeOfLastOrder() {
+    public LocalDateTime returnTimeOfLastOrder(List<Order> orders) {
         if (lastOrders.size() >= 1)
-            return lastOrders.get(lastOrders.size() - 1).getDateTime();
+            return orders.get(lastOrders.get(lastOrders.size() - 1)).getDateTime();
         return LocalDateTime.now();
     }
 
@@ -61,7 +61,7 @@ public class UserConsumer extends AbstractUser {
     public String convertEntityToCsvString() {
         StringBuilder orders = new StringBuilder();
         for (var k : lastOrders) {
-            orders.append(",").append(k.convertEntityToCsvString());
+            orders.append(",").append(k);
         }
         return super.convertEntityToCsvString() + "," + dateOfSignUp.toString() + "," + orders;
     }
@@ -77,6 +77,12 @@ public class UserConsumer extends AbstractUser {
             }
             super.convertCsvStringToEntity(abstractConstructor.toString());
             this.dateOfSignUp = LocalDate.parse(tempArr[9]);
+
+            this.lastOrders = new ArrayList<>();
+
+            for (int i = 10; i < tempArr.length; i++) {
+                this.lastOrders.add(Integer.valueOf(tempArr[i]));
+            }
         }
         catch (Exception exception) {
             System.out.println("Exceptie la citirea utilizatorului din CSV : " + exception);
