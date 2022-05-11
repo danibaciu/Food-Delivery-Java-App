@@ -1,15 +1,12 @@
 package pao.Components;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Product extends Entity<Long, Product>{
     static long serialProductsNumber = 0;
 
     private String nameOfProduct, unityOfMeasurement;
-    private List<String> ingredients;
+    private SortedSet<String> ingredients = new TreeSet<>();
     private double price, quantity;
 
     public Product(){
@@ -17,7 +14,7 @@ public class Product extends Entity<Long, Product>{
         serialProductsNumber += 1;
     }
 
-    public Product(String nameOfProduct, String unityOfMeasurement, List<String> ingredients, double price, double quantity) {
+    public Product(String nameOfProduct, String unityOfMeasurement, SortedSet<String> ingredients, double price, double quantity) {
         super(serialProductsNumber);
         serialProductsNumber += 1;
 
@@ -44,11 +41,11 @@ public class Product extends Entity<Long, Product>{
         this.unityOfMeasurement = unityOfMeasurement;
     }
 
-    public List<String> getIngredients() {
+    public SortedSet<String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(SortedSet<String> ingredients) {
         this.ingredients = ingredients;
     }
 

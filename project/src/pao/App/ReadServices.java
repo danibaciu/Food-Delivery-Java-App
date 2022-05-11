@@ -71,7 +71,7 @@ public class ReadServices {
         Scanner in = new Scanner(System.in);
 
         String nameOfProduct, unityOfMeasurement;
-        List<String> ingredients = new ArrayList<>();
+        SortedSet<String> ingredients = new TreeSet<>();
         Integer noOfIngredients;
         double price, quantity;
 
