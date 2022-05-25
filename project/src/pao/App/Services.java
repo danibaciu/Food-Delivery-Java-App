@@ -1,87 +1,70 @@
-package pao.App;
+package pao.app;
 
-import pao.Components.*;
+import pao.components.*;
+import pao.persistence.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Services {
     private static Services servicesInstance = null;
 
     private final ReadServices readServices = ReadServices.getInstance();
 
-    private List<UserConsumer> appUser = new ArrayList<>();
+    private final IRestaurantRepository restaurantRepository;
+    private final IAddressRepository addressRepository;
+    private final IStockRepository stockRepository;
+    private final IOrderRepository orderRepository;
+    private final IConsumerRepository consumerRepository;
+
+//    private List<UserConsumer> appUser = new ArrayList<>();
     private List<UserEmployee> appDrivers = new ArrayList<>();
     private List<LocalDateTime> driversAvailability = new ArrayList<>();
-    private List<Restaurant> appRestaurants = new ArrayList<>();
+//    private List<Restaurant> appRestaurants = new ArrayList<>();
     private List<Product> restaurantProducts = new ArrayList<>();
-    private List<Order> appOrders = new ArrayList<>();
+//    private List<Order> appOrders = new ArrayList<>();
 
-    public static Services getInstance() {
+   /* public static Services getInstance() {
         if (servicesInstance == null)
             servicesInstance = new Services();
         return servicesInstance;
+    }*/
+
+    public Services(IRestaurantRepository restaurantRepository, IAddressRepository addressRepository, IStockRepository stockRepository, IOrderRepository orderRepository, IConsumerRepository consumerRepository) {
+        this.restaurantRepository = restaurantRepository;
+        this.addressRepository = addressRepository;
+        this.stockRepository = stockRepository;
+        this.orderRepository = orderRepository;
+        this.consumerRepository = consumerRepository;
     }
 
-    public void uploadFromMemory() {
-        this.appDrivers = readServices.readFromCsvUserEmployee("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Drivers.csv");
-        this.appUser = readServices.readFromCsvUserConsumer("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Users.csv");
-        this.appOrders = readServices.readFromCsvOrder("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Orders.csv");
-        this.appRestaurants = readServices.readFromCsvRestaurant("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Restaurants.csv");
-        this.restaurantProducts = readServices.readFromCsvProduct("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Products.csv");
-    }
+//    public void uploadFromMemory() {
+//        this.appDrivers = readServices.readFromCsvUserEmployee("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Drivers.csv");
+//        this.appUser = readServices.readFromCsvUserConsumer("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Users.csv");
+//        this.appOrders = readServices.readFromCsvOrder("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Orders.csv");
+        //this.appRestaurants = readServices.readFromCsvRestaurant("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Restaurants.csv");
+//        this.restaurantProducts = readServices.readFromCsvProduct("C:\\Users\\danib\\OneDrive\\Documente\\GitHub\\Food-Delivery-Java-App\\project\\src\\pao\\CsvFiles\\Products.csv");
+//    }
 
-    public final void showMenu() {
-        System.out.println("# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #");
-        System.out.println("# # # # #   Welcome to out delivery platform console App   # # # # #");
-        System.out.println("# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #");
-        System.out.println("    Here are the options that we have implemented at this moment : ");
-        System.out.println("1. Add a user of the app.");
-        System.out.println("2. Add an employee of the app.");
-        System.out.println("3. Add a product.");
-        System.out.println("4. Add a restaurant for the app.");
-        System.out.println("5. Show user list of the food delivery app.");
-        System.out.println("6. Show employee list of the app.");
-        System.out.println("7. Show products.");
-        System.out.println("8. Show restaurants.");
-        System.out.println("9. Push a Food Order");
-        System.out.println("10. Show the users that ordered today.");
-        System.out.println("11. Show top 3 users that have ordered most times.");
-        System.out.println("12. Increase the salary for top 2 most active drivers.");
-        System.out.println("13. For each user, print the sum of his last order.");
-        System.out.println("14. EXIT");
-        System.out.println("     ? ? ? ? ?   How can I help you   ? ? ? ? ? ");
-        System.out.println(" - Introduce the option number that you choose : ");
-    }
 
-    public final void showLogo() {
-        System.out.println("  _____           _   _                                                                       \n" +
-                " |  __ \\         | | (_)                                                /\\                    \n" +
-                " | |  | |   ___  | |  _  __   __   ___   _ __   _   _     ______       /  \\     _ __    _ __  \n" +
-                " | |  | |  / _ \\ | | | | \\ \\ / /  / _ \\ | '__| | | | |   |______|     / /\\ \\   | '_ \\  | '_ \\ \n" +
-                " | |__| | |  __/ | | | |  \\ V /  |  __/ | |    | |_| |               / ____ \\  | |_) | | |_) |\n" +
-                " |_____/   \\___| |_| |_|   \\_/    \\___| |_|     \\__, |              /_/    \\_\\ | .__/  | .__/ \n" +
-                "                                                 __/ |                         | |     | |    \n" +
-                "                                                |___/                          |_|     |_|   ");
-    }
 
     public void addClient() {
         UserConsumer client = readServices.readClient();
-        appUser.add(client);
-        sortUsersByFullName();
+        consumerRepository.save(client);
+//        sortUsersByFullName();
     }
 
     public void addClient(UserConsumer client) {
-        appUser.add(client);
-        sortUsersByFullName();
+//        appUser.add(client);
+        consumerRepository.save(client);
+//        sortUsersByFullName();
     }
 
     public void viewClients() {
-        for (var user : appUser) {
-            System.out.println(user.toString());
-        }
+//        for (var user : appUser) {
+//            System.out.println(user.toString());
+//        }
+        consumerRepository.findAll().forEach(System.out::println);
     }
 
     public void addProduct() {
@@ -104,13 +87,13 @@ public class Services {
         driversAvailability.add(LocalDateTime.now());
     }
 
-    public void sortUsersByFullName() {
-        appUser.sort(new Comparator<UserConsumer>() {
-            public int compare(UserConsumer o1, UserConsumer o2) {
-                return Integer.compare(0, o1.getFirstName().compareTo(o2.getFirstName()));
-            }
-        });
-    }
+//    public void sortUsersByFullName() {
+//        appUser.sort(new Comparator<UserConsumer>() {
+//            public int compare(UserConsumer o1, UserConsumer o2) {
+//                return Integer.compare(0, o1.getFirstName().compareTo(o2.getFirstName()));
+//            }
+//        });
+//    }
 
     public void viewDrivers() {
         for (var driver : appDrivers) {
@@ -120,17 +103,20 @@ public class Services {
 
     public void addRestaurant() {
         Restaurant restaurant = readServices.readRestaurant();
-        appRestaurants.add(restaurant);
+        //appRestaurants.add(restaurant);
+        restaurantRepository.save(restaurant);
     }
 
     public void addRestaurant(Restaurant restaurant) {
-        appRestaurants.add(restaurant);
+        //appRestaurants.add(restaurant);
+        restaurantRepository.save(restaurant);
     }
 
     public void viewRestaurants() {
-        for (var restaurant : appRestaurants) {
+        /*for (var restaurant : appRestaurants) {
             System.out.println(restaurant.toString());
-        }
+        }*/
+        restaurantRepository.findAll().forEach(System.out::println);
     }
 
     public void orderFood(){
@@ -142,24 +128,28 @@ public class Services {
         System.out.println("Enter the order info :");
         Order order = readServices.readOrder();
 
-        appOrders.add(order);
+//        appOrders.add(order);
+        orderRepository.save(order);
 
-        for (UserConsumer user : appUser) {
-            if (user.getId().equals(userId)) {
-                user.addOrder(appOrders.size() - 1);
-                break;
-            }
-        }
+//        for (UserConsumer user : appUser) {
+//            if (user.getId().equals(userId)) {
+//                user.addOrder(appOrders.size() - 1);
+//                break;
+//            }
+//        }
 
         //update stock
         Long restaurantId = order.getRestaurantId();
 
-        for (Restaurant restaurant : appRestaurants) {
+        /*for (Restaurant restaurant : appRestaurants) {
             if (restaurant.getId().equals(restaurantId)) {
                 restaurant.updateStock(order.getProductsOrdered());
                 break;
             }
-        }
+        }*/
+        Restaurant restaurant = restaurantRepository.findOne(restaurantId);
+//        restaurant.updateStock(order.getProductsOrdered());
+        restaurantRepository.update(restaurant);
 
         Integer driverIndex;
 
@@ -177,15 +167,15 @@ public class Services {
     }
 
     public void printUserThatOrderedToday() {
-        for (UserConsumer user : appUser) {
-            if (user.getLastOrder(appOrders).getDateTime().toLocalDate().isEqual(LocalDate.now())) {
-                System.out.println(user.toString());
-            }
-        }
+
     }
 
     public void printFirst3UsersWithMaxNumOrders() {
+
         Integer poz1 = 0, poz2 = 0, poz3 = 0, noOfOrders;
+
+        List<UserConsumer> appUser = consumerRepository.findAll();
+
         for (Integer i = 0; i < appUser.size(); i++) {
             noOfOrders = appUser.get(i).getNumOfOrders();
             if (noOfOrders > appUser.get(poz1).getNumOfOrders()) {
@@ -220,8 +210,8 @@ public class Services {
 
     private Long getNoOfOrders(UserEmployee driver) {
         Long counter = 0L;
-        for (UserConsumer user : appUser) {
-            counter += user.getNoOfOrdersForADriver(driver, appOrders);
+        for (UserConsumer user : consumerRepository.findAll()) {
+            counter += user.getNoOfOrdersForADriver(driver, orderRepository.findAll());
         }
         return counter;
     }
@@ -230,11 +220,11 @@ public class Services {
         appDrivers.stream().sorted(Comparator.comparingLong(this::getNoOfOrders).reversed()).limit(2).toList().forEach((UserEmployee driver) -> driver.increaseSalaryByXPercent(10));
     }
 
-    public void printSumLastOrderForEachUser() {
-        for (var user : appUser) {
-            System.out.println("User " + user.getFullName() + " was ordered in value of " + calculateTotalFee(user.getLastOrder(appOrders)) + " in the date of " + user.returnTimeOfLastOrder(appOrders));
-        }
-    }
+//    public void printSumLastOrderForEachUser() {
+//        for (var user : appUser) {
+//            System.out.println("User " + user.getFullName() + " was ordered in value of " + calculateTotalFee(user.getLastOrder(appOrders)) + " in the date of " + user.returnTimeOfLastOrder(appOrders));
+//        }
+//    }
 
     public double calculateTotalFee(Order order) {
         double sum = 0.0;

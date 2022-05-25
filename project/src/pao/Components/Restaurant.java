@@ -1,45 +1,42 @@
-package pao.Components;
+package pao.components;
 
 import java.util.Arrays;
 import java.util.Map;
 
-public class Restaurant extends Entity<Long, Restaurant> {
+public class Restaurant extends Entity<Long> {
     static long serialRestaurantsNumber = 0;
 
-    private Address address;
+    private Long addressID;
     private String name;
-    private Stock restaurantStock;
-    private double commissionOfDelivery;
+    private Long stockID;
+    private Double commissionOfDelivery;
 
     public Restaurant() {
         super(serialRestaurantsNumber);
         serialRestaurantsNumber += 1;
     }
 
-    public Restaurant(Address address, String name, Stock restaurantStock, double commissionOfDelivery) {
+    public Restaurant(Long address, String name, Long restaurantStock, double commissionOfDelivery) {
         super(serialRestaurantsNumber);
         serialRestaurantsNumber += 1;
 
-        this.address = address;
+        this.addressID = address;
         this.name = name;
-        this.restaurantStock = restaurantStock;
+        this.stockID = restaurantStock;
         this.commissionOfDelivery = commissionOfDelivery;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Long getAddressID() {
+        return addressID;
+    }
+
+    public Long getStockID() {
+        return stockID;
     }
 
     public double getCommissionOfDelivery() {
@@ -50,49 +47,36 @@ public class Restaurant extends Entity<Long, Restaurant> {
         this.commissionOfDelivery = commissionOfDelivery;
     }
 
-    public void updateStock(Map<Long, Integer> productsOrdered) {
-        restaurantStock.updateStock(productsOrdered);
-    }
+//    public void updateStock(Map<Long, Integer> productsOrdered) {
+//        restaurantStock.updateStock(productsOrdered);
+//    }
 
-    public Stock getRestaurantStock() {
-        return restaurantStock;
-    }
-
-    public void setRestaurantStock(Stock restaurantStock) {
-        this.restaurantStock = restaurantStock;
-    }
 
     @Override
     public String toString() {
         return "Restaurant{" +
                 "restaurantId=" + getId()+
-                ", address=" + address.toString() +
+                ", addressID=" + addressID +
                 ", name='" + name + '\'' +
                 ", commissionOfDelivery=" + commissionOfDelivery +
-                Stock.class.toString() +
+                ", stockID=" + stockID +
                 '}';
     }
 
     @Override
     public String convertEntityToCsvString() {
-        return name + "," + commissionOfDelivery + "," + address.convertEntityToCsvString() + "," + restaurantStock.convertEntityToCsvString();
+        return name + "," + commissionOfDelivery + "," + addressID + "," + stockID;
     }
 
     @Override
     public void convertCsvStringToEntity(String CsvString) {
         String []tempArr = CsvString.split(CsvDelimiter);
-        StringBuilder stockString = null;
 
         try {
             this.name = tempArr[0];
             this.commissionOfDelivery = Double.parseDouble(tempArr[1]);
-            (this.address = new Address()).convertCsvStringToEntity(tempArr[2] + "," + tempArr[3] + "," + tempArr[4] + "," + tempArr[5]);
-
-            for (int i = 6; i < tempArr.length; i++) {
-                stockString.append(",").append(tempArr[i]);
-            }
-
-            (this.restaurantStock = new Stock()).convertCsvStringToEntity(stockString.toString());
+            this.addressID = Long.valueOf(tempArr[2]);
+            this.stockID = Long.valueOf(tempArr[3]);
         }
         catch (Exception exception) {
             System.out.println("Exceptie la citirea restaurantelor din CSV : " + exception);

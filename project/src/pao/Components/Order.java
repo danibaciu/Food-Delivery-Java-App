@@ -1,25 +1,31 @@
-package pao.Components;
+package pao.components;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class Order extends IOStream<Order> {
+public class Order extends Entity<Long> {
+    static long serialOrderNumber = 0;
 
     private Address addressOfDelivery;
     private Map<Long, Integer> productsOrdered;
-    private Entity<Long, Integer> restaurantId, driverID;
+    private Entity<Long> restaurantId, driverID;
     private LocalDateTime timeOfOrder;
 
     public Order() {
+        super(serialOrderNumber);
+        serialOrderNumber += 1;
     }
 
-    public Order(Address addressOfDelivery, Map<Long, Integer> productsOrdered, long restaurantId) {
+    public Order(Address addressOfDelivery, Map<Long, Integer> productsOrdered, long restaurantId, long driver) {
+        super(serialOrderNumber);
+        serialOrderNumber += 1;
+
         this.addressOfDelivery = addressOfDelivery;
         this.productsOrdered = productsOrdered;
         this.restaurantId.id = restaurantId;
         this.timeOfOrder = LocalDateTime.now();
-        this.driverID.id = -1L;
+        this.driverID.id = driver;
     }
 
     public Address getAddressOfDelivery() {
@@ -38,15 +44,9 @@ public class Order extends IOStream<Order> {
         return this.timeOfOrder;
     }
 
-    public void setDriverID(Long id) {
-        this.driverID.id = id;
-    }
-
     public Long getDriverID() {
         return driverID.getId();
     }
-
-
 
     @Override
     public String toString() {
@@ -62,6 +62,7 @@ public class Order extends IOStream<Order> {
                 "addressOfDelivery=" + addressOfDelivery.toString() +
                 ", productsOrdered=" + mapAsString +
                 ", restaurantId=" + restaurantId.id +
+                ", driverId=" + driverID.id +
                 ", timeOfOrder=" + timeOfOrder.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) +
                 '}';
     }

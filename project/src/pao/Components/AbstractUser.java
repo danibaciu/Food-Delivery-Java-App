@@ -1,9 +1,9 @@
-package pao.Components;
+package pao.components;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public abstract class AbstractUser extends Entity<Long, Object>{
+public abstract class AbstractUser extends Entity<Long>{
 
     static long serialOfUserNumber = 0;
 
@@ -39,6 +39,10 @@ public abstract class AbstractUser extends Entity<Long, Object>{
 
     public String getEmailAddress() {
         return emailAddress;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
     public void setEmailAddress(String emailAddress) {

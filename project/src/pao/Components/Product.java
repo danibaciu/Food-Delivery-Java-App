@@ -1,8 +1,8 @@
-package pao.Components;
+package pao.components;
 
 import java.util.*;
 
-public class Product extends Entity<Long, Product>{
+public class Product extends Entity<Long>{
     static long serialProductsNumber = 0;
 
     private String nameOfProduct, unityOfMeasurement;

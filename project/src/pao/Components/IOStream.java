@@ -1,6 +1,6 @@
-package pao.Components;
+package pao.components;
 
-public abstract class IOStream<T> {
+public abstract class IOStream {
 
     public static final String CsvDelimiter = ",";
 

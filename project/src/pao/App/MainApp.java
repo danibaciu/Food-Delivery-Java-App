@@ -1,53 +1,34 @@
-package pao.App;
+package pao.app;
 
-import java.util.Scanner;
+import pao.persistence.*;
+
+import java.io.IOException;
+import java.util.Properties;
 
 public class MainApp {
+
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
 
-        Services services = Services.getInstance();
+        Properties properties = new Properties();
 
-        services.showLogo();
-        System.out.println("\n\n\n");
-
-        System.out.println("Inainte de a porni meniul interactiv, vrei sa incarci datele din memorie ? (YES/NO) ");
-        String options = in.nextLine();
-        if (options.equals("YES")) {
-            services.uploadFromMemory();
-            System.out.println("S-a terminat incarcarea din memorie si acum poti continua activitatea pe aplicatie !");
-        } else {
-            if (!options.equals("NO")) {
-                System.out.println("Optiune invalida ! O sa continuam fara sa incarcam datele din memorie ! Multumim !");
-            }
+        try {
+            properties.load(MainApp.class.getResourceAsStream("/bd.config"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        IRestaurantRepository restaurantRepository = new RestaurantRepository(properties);
+        IAddressRepository addressRepository = new AddressRepository(properties);
+        IStockRepository stockRepository = new StockRepository(properties);
+        IOrderRepository orderRepository = new OrderRepository(properties);
+        IConsumerRepository consumerRepository = new ConsumerRepository(properties);
 
-        int option;
-        boolean exit = false;
 
-        while (!exit) {
+        Services services = new Services(restaurantRepository, addressRepository, stockRepository, orderRepository, consumerRepository);
 
-            services.showMenu();
+        UI ui = new UI(services);
 
-            option = in.nextInt();
+        ui.run();
 
-            switch (option) {
-                case 1 -> services.addClient();
-                case 2 -> services.addDriver();
-                case 3 -> services.addProduct();
-                case 4 -> services.addRestaurant();
-                case 5 -> services.viewClients();
-                case 6 -> services.viewDrivers();
-                case 7 -> services.viewProducts();
-                case 8 -> services.viewRestaurants();
-                case 9 -> services.orderFood();
-                case 10 -> services.printUserThatOrderedToday();
-                case 11 -> services.printFirst3UsersWithMaxNumOrders();
-                case 12 -> services.increaseSalaryForTop2MostActiveDrivers();
-                case 13 -> services.printSumLastOrderForEachUser();
-                default -> exit = true;
-            }
-        }
     }
 }

@@ -1,4 +1,4 @@
-package pao.Components;
+package pao.components;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,8 +21,18 @@ public class UserConsumer extends AbstractUser {
         lastOrders = new ArrayList<>();
     }
 
+    public UserConsumer(String firstName, String lastName, String emailAddress, LocalDate timeOfBirth, Address addressOfLiving, List<Integer> lst) {
+        super(firstName, lastName, emailAddress, timeOfBirth, addressOfLiving);
+        dateOfSignUp = LocalDate.now();
+        lastOrders = lst;
+    }
+
     public void addOrder(Integer order) {
         lastOrders.add(order);
+    }
+
+    public List<Integer> getLastOrders() {
+        return lastOrders;
     }
 
     public Order getLastOrder(List<Order> orders) {

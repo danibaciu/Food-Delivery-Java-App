@@ -1,9 +1,9 @@
-package pao.Components;
+package pao.components;
 
 import java.io.*;
 
 
-public class Address extends IOStream<Address> {
+public class Address extends Entity<Long> {
 
     private String country, city, street;
 

@@ -1,4 +1,4 @@
-package pao.Components;
+package pao.components;
 
 public enum PossibleJobs{
         CEO,

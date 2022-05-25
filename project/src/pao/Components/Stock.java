@@ -1,23 +1,32 @@
-package pao.Components;
+package pao.components;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
-public class Stock extends IOStream<Stock> {
+public class Stock extends Entity<Long> {
     private Map<Long, Integer> products;
     private LocalDate dateLastSupply;
 
     public Stock() {
     }
 
+
     public Stock(Map<Long, Integer> products) {
         this.products = products;
         this.dateLastSupply = LocalDate.now();
     }
 
+    public Stock(LocalDate d, Map<Long, Integer> products) {
+        this.products = products;
+        this.dateLastSupply = d;
+    }
+
     public LocalDate getDateLastSupply() {
         return dateLastSupply;
     }
+
+    public Map<Long, Integer> getProducts () { return products;}
 
     public void updateStock(Map<Long, Integer> productsOrdered) {
         for (var produs : productsOrdered.keySet()) {

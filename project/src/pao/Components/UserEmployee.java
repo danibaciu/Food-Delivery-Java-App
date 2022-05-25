@@ -1,4 +1,4 @@
-package pao.Components;
+package pao.components;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

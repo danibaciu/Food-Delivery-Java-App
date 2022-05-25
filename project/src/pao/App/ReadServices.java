@@ -1,6 +1,6 @@
-package pao.App;
+package pao.app;
 
-import pao.Components.*;
+import pao.components.*;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -9,6 +9,14 @@ import java.util.*;
 public class ReadServices {
 
     private static ReadServices readServicesInstance = null;
+
+    private ReadServices(){}
+
+    public static ReadServices getInstance() {
+        if (readServicesInstance == null)
+            readServicesInstance = new ReadServices();
+        return readServicesInstance;
+    }
 
     protected Address readAddress(Scanner in) {
         String country, city, street;
@@ -130,15 +138,14 @@ public class ReadServices {
         name = in.nextLine();
         System.out.println("Enter the commission Of Delivery :");
         commissionOfDelivery = in.nextDouble();
-        in.nextLine(); //consume the \n
 
-        System.out.println("\t****  The next steps is to enter the restaurant address");
+        System.out.println("\t****  The next steps is to enter the restaurant address ID");
 
-        Address restaurantAddress = readAddress(in);
+        Long restaurantAddress = in.nextLong();
 
-        System.out.println("\t****  The next steps is to enter the restaurant stock of products");
+        System.out.println("\t****  The next steps is to enter the restaurant stock ID");
 
-        Stock restaurantStock = readStock();
+        Long restaurantStock = in.nextLong();
 
 
         return new Restaurant(restaurantAddress, name, restaurantStock, commissionOfDelivery);
@@ -168,14 +175,10 @@ public class ReadServices {
 
             productsOrdered.put(x, productNo);
         }
-        return new Order(addressOfDelivery, productsOrdered, restaurantId);
+        return new Order(addressOfDelivery, productsOrdered, restaurantId, -1L);
     }
 
-    public static ReadServices getInstance() {
-        if (readServicesInstance == null)
-            readServicesInstance = new ReadServices();
-        return readServicesInstance;
-    }
+
 
     public List<UserConsumer> readFromCsvUserConsumer(String filePath) {
         List<UserConsumer> userConsumerList = new ArrayList<>();
