@@ -14,6 +14,17 @@ public class Product extends Entity<Long>{
         serialProductsNumber += 1;
     }
 
+    public Product(String nameOfProduct, String unityOfMeasurement,  double price, double quantity) {
+        super(serialProductsNumber);
+        serialProductsNumber += 1;
+
+        this.nameOfProduct = nameOfProduct;
+        this.unityOfMeasurement = unityOfMeasurement;
+        this.ingredients = null;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     public Product(String nameOfProduct, String unityOfMeasurement, SortedSet<String> ingredients, double price, double quantity) {
         super(serialProductsNumber);
         serialProductsNumber += 1;

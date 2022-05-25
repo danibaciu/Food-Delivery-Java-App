@@ -26,7 +26,7 @@ public class UI {
         System.out.println("11. Show top 3 users that have ordered most times.");
         System.out.println("12. Increase the salary for top 2 most active drivers.");
 //        System.out.println("13. For each user, print the sum of his last order.");
-        System.out.println("14. EXIT");
+        System.out.println("Another number : EXIT");
         System.out.println("     ? ? ? ? ?   How can I help you   ? ? ? ? ? ");
         System.out.println(" - Introduce the option number that you choose : ");
     }

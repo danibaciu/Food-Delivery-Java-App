@@ -1,0 +1,36 @@
+25 May 2022 17:19:39,281 TRACE pao.persistence.ConsumerRepository 61 save - Enter Saving consumer UserConsumer {firstName='abi', lastName='talent', emailAddress='abi@abi.com', dateOfBirth=2001-10-30, addressOfLiving=Address{country='romania', city='galati', street='principala', streetNumber=20}, id=0, dateOfSignUp=2022-05-25}
+25 May 2022 17:19:39,284 TRACE pao.setup.JDBCUtils 46 getConnection - Enter
+25 May 2022 17:19:39,284 TRACE pao.setup.JDBCUtils 23 getNewConnection - Enter
+25 May 2022 17:19:39,285 INFO  pao.setup.JDBCUtils 28 getNewConnection - trying to connect to database ... jdbc:mysql://localhost:3306/project
+25 May 2022 17:19:39,285 INFO  pao.setup.JDBCUtils 29 getNewConnection - user: root
+25 May 2022 17:19:39,286 INFO  pao.setup.JDBCUtils 30 getNewConnection - pass: 
+25 May 2022 17:19:39,410 TRACE pao.setup.JDBCUtils 55 getConnection - Exit with(com.mysql.cj.jdbc.ConnectionImpl@3f67593e)
+25 May 2022 17:19:39,426 TRACE pao.persistence.ConsumerRepository 77 save - Saved UserConsumer {firstName='abi', lastName='talent', emailAddress='abi@abi.com', dateOfBirth=2001-10-30, addressOfLiving=Address{country='romania', city='galati', street='principala', streetNumber=20}, id=0, dateOfSignUp=2022-05-25} instances
+25 May 2022 17:19:39,426 TRACE pao.persistence.ConsumerRepository 82 save - Exit
+25 May 2022 17:20:15,260 TRACE pao.persistence.RestaurantRepository 106 findAll - Enter Finding all restaurants
+25 May 2022 17:20:15,261 TRACE pao.setup.JDBCUtils 46 getConnection - Enter
+25 May 2022 17:20:15,261 TRACE pao.setup.JDBCUtils 23 getNewConnection - Enter
+25 May 2022 17:20:15,261 INFO  pao.setup.JDBCUtils 28 getNewConnection - trying to connect to database ... jdbc:mysql://localhost:3306/project
+25 May 2022 17:20:15,261 INFO  pao.setup.JDBCUtils 29 getNewConnection - user: root
+25 May 2022 17:20:15,261 INFO  pao.setup.JDBCUtils 30 getNewConnection - pass: 
+25 May 2022 17:20:15,265 TRACE pao.setup.JDBCUtils 55 getConnection - Exit with(com.mysql.cj.jdbc.ConnectionImpl@4ff8d125)
+25 May 2022 17:20:15,270 TRACE pao.persistence.RestaurantRepository 119 findAll - Found all instances
+25 May 2022 17:20:15,270 TRACE pao.persistence.RestaurantRepository 124 findAll - Exit
+25 May 2022 17:20:33,132 TRACE pao.persistence.ConsumerRepository 168 findAll - Enter Finding all consumers
+25 May 2022 17:20:33,132 TRACE pao.setup.JDBCUtils 46 getConnection - Enter
+25 May 2022 17:20:33,132 TRACE pao.setup.JDBCUtils 23 getNewConnection - Enter
+25 May 2022 17:20:33,132 INFO  pao.setup.JDBCUtils 28 getNewConnection - trying to connect to database ... jdbc:mysql://localhost:3306/project
+25 May 2022 17:20:33,132 INFO  pao.setup.JDBCUtils 29 getNewConnection - user: root
+25 May 2022 17:20:33,132 INFO  pao.setup.JDBCUtils 30 getNewConnection - pass: 
+25 May 2022 17:20:33,135 TRACE pao.setup.JDBCUtils 55 getConnection - Exit with(com.mysql.cj.jdbc.ConnectionImpl@1fc32e4f)
+25 May 2022 17:20:33,139 TRACE pao.persistence.ConsumerRepository 193 findAll - Found all instances
+25 May 2022 17:20:33,140 TRACE pao.persistence.ConsumerRepository 198 findAll - Exit
+25 May 2022 17:47:08,936 TRACE pao.persistence.RestaurantRepository 106 findAll - Enter Finding all restaurants
+25 May 2022 17:47:08,938 TRACE pao.setup.JDBCUtils 46 getConnection - Enter
+25 May 2022 17:47:08,938 TRACE pao.setup.JDBCUtils 23 getNewConnection - Enter
+25 May 2022 17:47:08,940 INFO  pao.setup.JDBCUtils 28 getNewConnection - trying to connect to database ... jdbc:mysql://localhost:3306/project
+25 May 2022 17:47:08,940 INFO  pao.setup.JDBCUtils 29 getNewConnection - user: root
+25 May 2022 17:47:08,940 INFO  pao.setup.JDBCUtils 30 getNewConnection - pass: 
+25 May 2022 17:47:09,049 TRACE pao.setup.JDBCUtils 55 getConnection - Exit with(com.mysql.cj.jdbc.ConnectionImpl@50dfbc58)
+25 May 2022 17:47:09,064 TRACE pao.persistence.RestaurantRepository 119 findAll - Found all instances
+25 May 2022 17:47:09,065 TRACE pao.persistence.RestaurantRepository 124 findAll - Exit

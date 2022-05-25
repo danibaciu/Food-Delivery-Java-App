@@ -11,6 +11,20 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
+/*
+create table stock(
+id integer primary key auto_increment,
+dateLastSupply varchar(100)
+);
+ */
+
+/*
+create table stock_products(
+idStock integer not null,
+idProduct integer not null,
+numberOfProducts integer not null
+);
+ */
 
 public class StockRepository extends AbstractRepository<Long, Stock> implements IStockRepository {
     public StockRepository(Properties props) {
@@ -22,7 +36,7 @@ public class StockRepository extends AbstractRepository<Long, Stock> implements 
         logger.traceEntry("Saving stock {}", elem);
         try {
             ensureConnection();
-            String sql = "insert into stock (timestamp) values (?)";
+            String sql = "insert into stock (dateLastSupply) values (?)";
             PreparedStatement statement = PreparedStatementFactory.prepareStatement(connection, sql, elem.getDateLastSupply().toString());
             statement.executeUpdate();
 
@@ -67,7 +81,7 @@ public class StockRepository extends AbstractRepository<Long, Stock> implements 
         logger.traceEntry("Updating stock {}", elem);
         try {
             ensureConnection();
-            String sql = "update stock set timestamp = ? where id = ?";
+            String sql = "update stock set dateLastSupply = ? where id = ?";
             PreparedStatement statement = PreparedStatementFactory.prepareStatement(connection, sql, elem.getDateLastSupply(), elem.getId());
             statement.executeUpdate();
             destroyConnection();
@@ -102,7 +116,7 @@ public class StockRepository extends AbstractRepository<Long, Stock> implements 
                 m.put(res.getLong(1), res.getInt(2));
             }
 
-            Stock stock = new Stock(LocalDate.parse(result.getString("timestamp")), m);
+            Stock stock = new Stock(LocalDate.parse(result.getString("dateLastSupply")), m);
 
             destroyConnection();
 
@@ -141,7 +155,7 @@ public class StockRepository extends AbstractRepository<Long, Stock> implements 
                     m.put(res.getLong(1), res.getInt(2));
                 }
 
-                Stock stock = new Stock(LocalDate.parse(result.getString("timestamp")), m);
+                Stock stock = new Stock(LocalDate.parse(result.getString("dateLastSupply")), m);
                 stockList.add(stock);
             }
             destroyConnection();
