@@ -22,9 +22,9 @@ public class UI {
         System.out.println("7. Show products.");
         System.out.println("8. Show restaurants.");
         System.out.println("9. Push a Food Order");
-        System.out.println("10. Show the users that ordered today.");
-        System.out.println("11. Show top 3 users that have ordered most times.");
-        System.out.println("12. Increase the salary for top 2 most active drivers.");
+//        System.out.println("10. Show the users that ordered today.");
+        System.out.println("10. Show top 3 users that have ordered most times.");
+        System.out.println("11. Increase the salary for top 2 most active drivers.");
 //        System.out.println("13. For each user, print the sum of his last order.");
         System.out.println("Another number : EXIT");
         System.out.println("     ? ? ? ? ?   How can I help you   ? ? ? ? ? ");
@@ -79,9 +79,9 @@ public class UI {
                 case 7 -> services.viewProducts();
                 case 8 -> services.viewRestaurants();
                 case 9 -> services.orderFood();
-                case 10 -> services.printUserThatOrderedToday();
-                case 11 -> services.printFirst3UsersWithMaxNumOrders();
-                case 12 -> services.increaseSalaryForTop2MostActiveDrivers();
+//                case 10 -> services.printUserThatOrderedToday();
+                case 10 -> services.printFirst3UsersWithMaxNumOrders();
+                case 11 -> services.increaseSalaryForTop2MostActiveDrivers();
 //                case 13 -> services.printSumLastOrderForEachUser();
                 default -> exit = true;
             }

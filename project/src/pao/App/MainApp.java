@@ -22,13 +22,13 @@ public class MainApp {
         IStockRepository stockRepository = new StockRepository(properties);
         IOrderRepository orderRepository = new OrderRepository(properties);
         IConsumerRepository consumerRepository = new ConsumerRepository(properties);
+        IProductRepository productRepository = new ProductRepository(properties);
 
 
-        Services services = new Services(restaurantRepository, addressRepository, stockRepository, orderRepository, consumerRepository);
+        Services services = new Services(restaurantRepository, addressRepository, stockRepository, orderRepository, consumerRepository, productRepository);
 
         UI ui = new UI(services);
 
         ui.run();
-
     }
 }

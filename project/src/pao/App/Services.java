@@ -16,12 +16,13 @@ public class Services {
     private final IStockRepository stockRepository;
     private final IOrderRepository orderRepository;
     private final IConsumerRepository consumerRepository;
+    private final IProductRepository productRepository;
 
 //    private List<UserConsumer> appUser = new ArrayList<>();
     private List<UserEmployee> appDrivers = new ArrayList<>();
     private List<LocalDateTime> driversAvailability = new ArrayList<>();
 //    private List<Restaurant> appRestaurants = new ArrayList<>();
-    private List<Product> restaurantProducts = new ArrayList<>();
+//    private List<Product> restaurantProducts = new ArrayList<>();
 //    private List<Order> appOrders = new ArrayList<>();
 
    /* public static Services getInstance() {
@@ -30,12 +31,13 @@ public class Services {
         return servicesInstance;
     }*/
 
-    public Services(IRestaurantRepository restaurantRepository, IAddressRepository addressRepository, IStockRepository stockRepository, IOrderRepository orderRepository, IConsumerRepository consumerRepository) {
+    public Services(IRestaurantRepository restaurantRepository, IAddressRepository addressRepository, IStockRepository stockRepository, IOrderRepository orderRepository, IConsumerRepository consumerRepository, IProductRepository productRepository) {
         this.restaurantRepository = restaurantRepository;
         this.addressRepository = addressRepository;
         this.stockRepository = stockRepository;
         this.orderRepository = orderRepository;
         this.consumerRepository = consumerRepository;
+        this.productRepository = productRepository;
     }
 
 //    public void uploadFromMemory() {
@@ -68,13 +70,14 @@ public class Services {
     }
 
     public void addProduct() {
-        restaurantProducts.add(readServices.readProduct());
+        productRepository.save(readServices.readProduct());
     }
 
     public void viewProducts() {
-        for (Product product : restaurantProducts) {
-            System.out.println(product.toString());
-        }
+//        for (Product product : restaurantProducts) {
+//            System.out.println(product.toString());
+//        }
+        productRepository.findAll();
     }
 
     public void addDriver() {
@@ -166,9 +169,6 @@ public class Services {
         // here I added num of products minutes to the now local date time
     }
 
-    public void printUserThatOrderedToday() {
-
-    }
 
     public void printFirst3UsersWithMaxNumOrders() {
 
@@ -230,7 +230,7 @@ public class Services {
         double sum = 0.0;
         var productsOrdered = order.getProductsOrdered();
         for (var id : productsOrdered.keySet()) {
-            sum += restaurantProducts.get(Math.toIntExact(id)).getPrice() * productsOrdered.get(id); // sum(price * quantity)
+            sum += productRepository.findAll().get(Math.toIntExact(id)).getPrice() * productsOrdered.get(id); // sum(price * quantity)
         }
         return sum;
     }
